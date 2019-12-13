@@ -1,37 +1,51 @@
 package cn.zy.userprofile.realtime.dw.dao.hbase;
 
 
-import cn.zy.userprofile.realtime.dw.common.utils.Property;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.*;
 
 public class HbaseClient {
-    private static Admin admin;
-    public static Connection conn;
+    private static Logger logger = LoggerFactory.getLogger(HbaseClient.class);
 
-    static {
+    /**
+     * 获取HBase连接
+     *
+     * @param configMap HBase配置文件
+     * @return HBase连接
+     * @throws IOException
+     */
+    public static Connection getConnection(Map<String, String> configMap) throws IOException {
         Configuration conf = HBaseConfiguration.create();
-        conf.set("hbase.rootdir", Property.getStrValue("hbase.rootdir"));
-        conf.set("hbase.zookeeper.quorum", Property.getStrValue("hbase.zookeeper.quorum"));
-        conf.set("hbase.client.scanner.timeout.period", Property.getStrValue("hbase.client.scanner.timeout.period"));
-        conf.set("hbase.rpc.timeout", Property.getStrValue("hbase.rpc.timeout"));
-        try {
-            conn = ConnectionFactory.createConnection(conf);
-            admin = conn.getAdmin();
-        } catch (IOException e) {
-            e.printStackTrace();
+        Iterator<Map.Entry<String, String>> iterator = configMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, String> next = iterator.next();
+            conf.set(next.getKey(), next.getValue());
         }
+        return ConnectionFactory.createConnection(conf);
     }
 
-    public static void createTable(String tableName, String... columnFamilies) throws IOException {
+
+    /**
+     * 创建HBase表
+     *
+     * @param conn           HBase连接
+     * @param tableName      HBase表名
+     * @param columnFamilies HBase列族名
+     * @throws IOException
+     */
+    public static void createTable(Connection conn, String tableName, String... columnFamilies) throws IOException {
         TableName tablename = TableName.valueOf(tableName);
+        Admin admin = conn.getAdmin();
+
         if (admin.tableExists(tablename)) {
-            System.out.println("Table Exists");
+            logger.warn("HBase table is exists!");
         } else {
             System.out.println("Start create table");
             HTableDescriptor tableDescriptor = new HTableDescriptor(tablename);
@@ -39,21 +53,23 @@ public class HbaseClient {
                 HTableDescriptor column = tableDescriptor.addFamily(new HColumnDescriptor(columnFamliy));
             }
             admin.createTable(tableDescriptor);
-            System.out.println("Create Table success");
+            logger.info("Create Table success");
         }
     }
 
+
     /**
-     * 获取一列获取一行数据
+     * 获取一行数据
      *
-     * @param tableName
-     * @param rowKey
-     * @param famliyName
-     * @param column
+     * @param conn       HBase连接
+     * @param tableName  HBase表名
+     * @param rowKey     行键
+     * @param famliyName 列族名
+     * @param column     列名
      * @return
      * @throws IOException
      */
-    public static String getData(String tableName, String rowKey, String famliyName, String column) throws IOException {
+    public static String get(Connection conn, String tableName, String rowKey, String famliyName, String column) throws IOException {
         Table table = conn.getTable(TableName.valueOf(tableName));
         byte[] row = Bytes.toBytes(rowKey);
         Get get = new Get(row);
@@ -69,11 +85,13 @@ public class HbaseClient {
     /**
      * 获取一行的所有数据 并且排序
      *
-     * @param tableName 表名
-     * @param rowKey    列名
+     * @param conn
+     * @param tableName
+     * @param rowKey
+     * @return
      * @throws IOException
      */
-    public static List<Map.Entry> getRow(String tableName, String rowKey) throws IOException {
+    public static List<Map.Entry> getRow(Connection conn, String tableName, String rowKey) throws IOException {
         Table table = conn.getTable(TableName.valueOf(tableName));
         byte[] row = Bytes.toBytes(rowKey);
         Get get = new Get(row);
@@ -95,57 +113,57 @@ public class HbaseClient {
         return ans;
     }
 
+
     /**
      * 向对应列添加数据
      *
-     * @param tablename  表名
-     * @param rowkey     行号
-     * @param famliyname 列族名
+     * @param conn       HBase连接
+     * @param tableName  HBase表名
+     * @param rowKey     行键
+     * @param famliyName 列族名
      * @param column     列名
-     * @param data       数据
+     * @param value      值
      * @throws Exception
      */
-    public static void putData(String tablename, String rowkey, String famliyname, String column, String data) throws Exception {
-        Table table = conn.getTable(TableName.valueOf(tablename));
-        Put put = new Put(rowkey.getBytes());
-        put.addColumn(famliyname.getBytes(), column.getBytes(), data.getBytes());
+    public static void put(Connection conn, String tableName, String rowKey, String famliyName, String column, String value) throws Exception {
+        Table table = conn.getTable(TableName.valueOf(tableName));
+        Put put = new Put(rowKey.getBytes());
+        put.addColumn(famliyName.getBytes(), column.getBytes(), value.getBytes());
         table.put(put);
     }
 
+
     /**
-     * 将该单元格加1
+     * 列值加1
      *
-     * @param tablename  表名
-     * @param rowkey     行号
-     * @param famliyname 列族名
+     * @param conn       HBase连接
+     * @param tableName  HBase表名
+     * @param rowKey     行键
+     * @param famliyName 列族名
      * @param column     列名
      * @throws Exception
      */
-    public static void increamColumn(String tablename, String rowkey, String famliyname, String column) throws Exception {
-        String val = getData(tablename, rowkey, famliyname, column);
+    public static void increamColumn(Connection conn, String tableName, String rowKey, String famliyName, String column) throws Exception {
+        String val = get(conn, tableName, rowKey, famliyName, column);
         int res = 1;
         if (val != null) {
             res = Integer.valueOf(val) + 1;
         }
-        putData(tablename, rowkey, famliyname, column, String.valueOf(res));
+        put(conn, tableName, rowKey, famliyName, column, String.valueOf(res));
     }
-
-    public static void main(String[] args) throws IOException {
-        List<Map.Entry> ps = HbaseClient.getRow("ps", "1");
-        ps.forEach(System.out::println);
-    }
-
 
     /**
      * 取出表中所有的key
      *
-     * @param tableName
+     * @param conn      HBase连接
+     * @param tableName HBase表名
      * @return
+     * @throws IOException
      */
-    public static List<String> getAllKey(String tableName) throws IOException {
+    public static List<String> getAllKey(Connection conn, String tableName) throws IOException {
         List<String> keys = new ArrayList<>();
         Scan scan = new Scan();
-        Table table = HbaseClient.conn.getTable(TableName.valueOf(tableName));
+        Table table = conn.getTable(TableName.valueOf(tableName));
         ResultScanner scanner = table.getScanner(scan);
         for (Result r : scanner) {
             keys.add(new String(r.getRow()));
