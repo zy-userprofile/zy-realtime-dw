@@ -1,6 +1,5 @@
 package cn.zy.userprofile.realtime.dw.model.test
 
-import cn.zy.userprofile.realtime.dw.common.utils.WordCountData
 import org.apache.flink.api.java.utils.ParameterTool
 import org.apache.flink.api.scala.ExecutionEnvironment
 import org.apache.flink.api.scala._

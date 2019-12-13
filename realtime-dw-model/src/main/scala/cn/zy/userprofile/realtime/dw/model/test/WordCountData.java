@@ -1,4 +1,4 @@
-package cn.zy.userprofile.realtime.dw.common.utils;
+package cn.zy.userprofile.realtime.dw.model.test;
 
 /**
  * author: hufenggang
