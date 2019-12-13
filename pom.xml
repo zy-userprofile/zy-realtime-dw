@@ -34,18 +34,21 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <java.version>1.8</java.version>
-        <scala.version>2.11.12</scala.version>
+        <scala.version>2.12.10</scala.version>
         <junit.version>4.12</junit.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <slf4j-log4j12.version>1.7.24</slf4j-log4j12.version>
         <hbase.version>2.0.0</hbase.version>
         <hadoop.version>2.7.3</hadoop.version>
         <jedis.version>3.0.1</jedis.version>
+        <flink-scala.version>1.9.0</flink-scala.version>
+        <flink-clients.version>1.9.0</flink-clients.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
 
+            <!--引入junit依赖-->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -65,18 +68,38 @@
                 <version>${slf4j-log4j12.version}</version>
             </dependency>
 
-            <!-- hbase dependency -->
+            <!--引入HBase开发相关依赖-->
             <dependency>
                 <groupId>org.apache.hbase</groupId>
                 <artifactId>hbase-client</artifactId>
                 <version>${hbase.version}</version>
             </dependency>
 
-            <!-- jedis dependency -->
+            <!--引入Jedis开发相关依赖-->
             <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
+            </dependency>
+
+            <!--引入Scala开发相关依赖-->
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
+
+            <!--引入Flink开发相关依赖-->
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-scala_2.12</artifactId>
+                <version>${flink-scala.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-clients_2.12</artifactId>
+                <version>${flink-clients.version}</version>
             </dependency>
 
         </dependencies>
