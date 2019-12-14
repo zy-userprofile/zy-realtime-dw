@@ -8,6 +8,8 @@ import org.apache.flink.api.scala._
  * author: hufenggang
  * email: hufenggang2019@gmail.com
  * date: 2019/12/13 17:58
+ *
+ * Flink实现流式数据之词频统计
  */
 object WindowWordCountApp {
 
