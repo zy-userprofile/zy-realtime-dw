@@ -5,7 +5,6 @@ import java.util.Properties
 import cn.zy.userprofile.realtime.dw.common.constants.KafkaConstant
 import cn.zy.userprofile.realtime.dw.common.utils.ConfigScalaUtils
 import org.apache.flink.api.common.serialization.SimpleStringSchema
-import org.apache.flink.api.java.utils.ParameterTool
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
