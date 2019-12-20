@@ -9,13 +9,15 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <description>Realtime data warehouse flink demo</description>
     <modules>
         <module>realtime-dw-common</module>
         <module>realtime-dw-dao</module>
         <module>realtime-dw-model</module>
+        <module>realtime-dw-spark-common</module>
     </modules>
+
     <name>zy-realtime-dw</name>
+    <description>Realtime data warehouse flink demo</description>
 
     <developers>
         <developer>
@@ -34,18 +36,20 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <java.version>1.8</java.version>
-        <scala.version>2.12.10</scala.version>
+        <scala.version>2.11.12</scala.version>
         <junit.version>4.12</junit.version>
+        <jedis.version>3.0.1</jedis.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <slf4j-log4j12.version>1.7.24</slf4j-log4j12.version>
+        <guava.version>16.0</guava.version>
+        <gson.version>gson</gson.version>
+        <fastjson.version>1.2.47</fastjson.version>
+        <okhttp.version>3.14.2</okhttp.version>
+        <commons-lang3.version>3.4</commons-lang3.version>
         <hbase.version>2.0.0</hbase.version>
         <hadoop.version>2.7.3</hadoop.version>
-        <jedis.version>3.0.1</jedis.version>
         <flink.version>1.9.0</flink.version>
-        <guava.version>16.0</guava.version>
-        <okhttp.version>3.14.0</okhttp.version>
-        <fastjson.version>1.2.47</fastjson.version>
-        <commons-lang3.version>3.4</commons-lang3.version>
+        <spark.version>2.4.4</spark.version>
     </properties>
 
     <dependencyManagement>
@@ -63,24 +67,6 @@
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-library</artifactId>
-                <version>${scala.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.scala-lang</groupId>
-                <artifactId>scala-compiler</artifactId>
-                <version>${scala.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.scala-lang</groupId>
-                <artifactId>scala-reflect</artifactId>
-                <version>${scala.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.scala-lang</groupId>
-                <artifactId>scalap</artifactId>
                 <version>${scala.version}</version>
             </dependency>
 
@@ -122,6 +108,13 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+
+            <!--引入gson依赖-->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
             </dependency>
 
             <!--引入HBase开发相关依赖-->
@@ -173,6 +166,26 @@
                 <groupId>org.apache.flink</groupId>
                 <artifactId>flink-avro-confluent-registry</artifactId>
                 <version>${flink.version}</version>
+            </dependency>
+
+            <!--引入Spark开发相关依赖-->
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-core_2.11</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-sql_2.11</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-hive_2.11</artifactId>
+                <version>${spark.version}</version>
+                <scope>provided</scope>
             </dependency>
 
         </dependencies>
