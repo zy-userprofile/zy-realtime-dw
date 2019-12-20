@@ -45,6 +45,16 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.hudi</groupId>
+            <artifactId>hudi-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hudi</groupId>
+            <artifactId>hudi-spark</artifactId>
+        </dependency>
+
     </dependencies>
 
 
