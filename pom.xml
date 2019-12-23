@@ -146,19 +146,19 @@
             <!--引入Flink开发相关依赖-->
             <dependency>
                 <groupId>org.apache.flink</groupId>
-                <artifactId>flink-scala_2.12</artifactId>
+                <artifactId>flink-scala_2.11</artifactId>
                 <version>${flink.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.flink</groupId>
-                <artifactId>flink-clients_2.12</artifactId>
+                <artifactId>flink-clients_2.11</artifactId>
                 <version>${flink.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.apache.flink</groupId>
-                <artifactId>flink-streaming-scala_2.12</artifactId>
+                <artifactId>flink-streaming-scala_2.11</artifactId>
                 <version>${flink.version}</version>
             </dependency>
 
