@@ -50,6 +50,8 @@
         <hadoop.version>2.7.3</hadoop.version>
         <flink.version>1.9.0</flink.version>
         <spark.version>2.4.4</spark.version>
+        <hadoop-client.version>2.7.3</hadoop-client.version>
+        <hive-hbase-handler.version>2.3.2</hive-hbase-handler.version>
     </properties>
 
     <dependencyManagement>
@@ -110,10 +112,27 @@
                 <version>${fastjson.version}</version>
             </dependency>
 
+            <!-- hadoop dependency -->
+            <dependency>
+                <groupId>org.apache.hadoop</groupId>
+                <artifactId>hadoop-client</artifactId>
+                <version>${hadoop-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.hive</groupId>
+                <artifactId>hive-hbase-handler</artifactId>
+                <version>${hive-hbase-handler.version}</version>
+            </dependency>
+
             <!--引入HBase开发相关依赖-->
             <dependency>
                 <groupId>org.apache.hbase</groupId>
                 <artifactId>hbase-client</artifactId>
+                <version>${hbase.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.hbase</groupId>
+                <artifactId>hbase-protocol</artifactId>
                 <version>${hbase.version}</version>
             </dependency>
 
