@@ -12,7 +12,7 @@ import java.util.Properties
  *
  * 配置文件加载工具类 -- Scala代码实现
  */
-object ConfigScalaUtils {
+object ConfigUtils {
 
     def getPropertiesMap(clazz: Class[_], path: String): Map[String, String] = {
 
@@ -29,5 +29,15 @@ object ConfigScalaUtils {
         }
 
         propertiesMap.toMap
+    }
+
+    /**
+     * 获取配置文件
+     * @param clazz
+     * @param path
+     * @return java.util.Map对象
+     */
+    def getPropertiesJavaMap(clazz: Class[_], path: String): java.util.Map[String, String] = {
+        getPropertiesMap(clazz, path)
     }
 }
