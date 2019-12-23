@@ -14,6 +14,7 @@
         <module>realtime-dw-dao</module>
         <module>realtime-dw-model</module>
         <module>realtime-dw-spark-common</module>
+        <module>realtime-dw-service</module>
     </modules>
 
     <name>zy-realtime-dw</name>
