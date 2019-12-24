@@ -9,15 +9,16 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <description>Realtime data warehouse flink demo</description>
     <modules>
         <module>realtime-dw-common</module>
         <module>realtime-dw-dao</module>
         <module>realtime-dw-model</module>
+        <module>realtime-dw-spark-common</module>
         <module>realtime-dw-service</module>
-        <module>spark/realtime-dw-spark-common</module>
     </modules>
+
     <name>zy-realtime-dw</name>
+    <description>Realtime data warehouse flink demo</description>
 
     <developers>
         <developer>
@@ -38,17 +39,19 @@
         <java.version>1.8</java.version>
         <scala.version>2.11.12</scala.version>
         <junit.version>4.12</junit.version>
+        <jedis.version>3.0.1</jedis.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <slf4j-log4j12.version>1.7.24</slf4j-log4j12.version>
+        <guava.version>16.0</guava.version>
+        <fastjson.version>1.2.47</fastjson.version>
+        <okhttp.version>3.14.2</okhttp.version>
+        <commons-lang3.version>3.4</commons-lang3.version>
         <hbase.version>2.0.0</hbase.version>
         <hadoop.version>2.7.3</hadoop.version>
-        <jedis.version>3.0.1</jedis.version>
         <flink.version>1.9.0</flink.version>
-        <guava.version>16.0</guava.version>
-        <okhttp.version>3.14.0</okhttp.version>
-        <fastjson.version>1.2.47</fastjson.version>
-        <commons-lang3.version>3.4</commons-lang3.version>
-        <spring-bean.version>5.2.1.RELEASE</spring-bean.version>
+        <spark.version>2.4.4</spark.version>
+        <hadoop-client.version>2.7.3</hadoop-client.version>
+        <hive-hbase-handler.version>2.3.2</hive-hbase-handler.version>
     </properties>
 
     <dependencyManagement>
@@ -66,24 +69,6 @@
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-library</artifactId>
-                <version>${scala.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.scala-lang</groupId>
-                <artifactId>scala-compiler</artifactId>
-                <version>${scala.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.scala-lang</groupId>
-                <artifactId>scala-reflect</artifactId>
-                <version>${scala.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.scala-lang</groupId>
-                <artifactId>scalap</artifactId>
                 <version>${scala.version}</version>
             </dependency>
 
@@ -127,10 +112,27 @@
                 <version>${fastjson.version}</version>
             </dependency>
 
+            <!-- hadoop dependency -->
+            <dependency>
+                <groupId>org.apache.hadoop</groupId>
+                <artifactId>hadoop-client</artifactId>
+                <version>${hadoop-client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.hive</groupId>
+                <artifactId>hive-hbase-handler</artifactId>
+                <version>${hive-hbase-handler.version}</version>
+            </dependency>
+
             <!--引入HBase开发相关依赖-->
             <dependency>
                 <groupId>org.apache.hbase</groupId>
                 <artifactId>hbase-client</artifactId>
+                <version>${hbase.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.hbase</groupId>
+                <artifactId>hbase-protocol</artifactId>
                 <version>${hbase.version}</version>
             </dependency>
 
@@ -178,16 +180,24 @@
                 <version>${flink.version}</version>
             </dependency>
 
+            <!--引入Spark开发相关依赖-->
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-beans</artifactId>
-                <version>5.2.1.RELEASE</version>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-core_2.11</artifactId>
+                <version>${spark.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring</artifactId>
-                <version>2.5.6</version>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-sql_2.11</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-hive_2.11</artifactId>
+                <version>${spark.version}</version>
+                <scope>provided</scope>
             </dependency>
 
         </dependencies>
