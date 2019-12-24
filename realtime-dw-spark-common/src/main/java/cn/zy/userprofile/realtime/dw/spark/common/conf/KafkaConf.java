@@ -17,7 +17,13 @@ public class KafkaConf {
     public static final String KAFKA_CONFIG_ZOOKEEPER_CONNECT_KEY = configMap.get(KafkaConstant.KAFKA_CONFIG_ZOOKEEPER_CONNECT_KEY);
 
     public static final String KAFKA_TOPIC_PV = configMap.get(KafkaConstant.KAFKA_TOPIC_PV);
+    public static final String KAFKA_TOPIC_SESSION = configMap.get(KafkaConstant.KAFKA_TOPIC_SESSION);
+    public static final String KAFKA_TOPIC_METRICS = configMap.get(KafkaConstant.KAFKA_TOPIC_METRICS);
     public static final String KAFKA_TOPIC_EVENT = configMap.get(KafkaConstant.KAFKA_TOPIC_EVENT);
     public static final String KAFKA_TOPIC_STREAM1 = configMap.get(KafkaConstant.KAFKA_TOPIC_STREAM1);
     public static final String KAFKA_TOPIC_STREAM2 = configMap.get(KafkaConstant.KAFKA_TOPIC_STREAM2);
+
+    public static void main(String[] args) {
+        System.out.println(KAFKA_TOPIC_PV);
+    }
 }
