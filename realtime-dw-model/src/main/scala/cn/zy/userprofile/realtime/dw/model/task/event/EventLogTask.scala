@@ -4,7 +4,7 @@ import java.util.Properties
 
 import cn.zy.userprofile.realtime.dw.common.constants.KafkaConstant
 import cn.zy.userprofile.realtime.dw.common.model.CmEventLogMsg
-import cn.zy.userprofile.realtime.dw.common.utils.ConfigScalaUtils
+import cn.zy.userprofile.realtime.dw.common.utils.ConfigUtils
 import com.google.common.base.Strings
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.streaming.api.TimeCharacteristic
@@ -32,7 +32,7 @@ object EventLogTask {
         env.enableCheckpointing(5000)
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
 
-        val kafkaConfigMap: Map[String, String] = ConfigScalaUtils.getPropertiesMap(this.getClass, "/kafka.properties")
+        val kafkaConfigMap: Map[String, String] = ConfigUtils.getPropertiesMap(this.getClass, "/kafka.properties")
 
         val properties: Properties = new Properties()
         properties.setProperty("bootstrap.servers", kafkaConfigMap(KafkaConstant.KAFKA_CONFIG_BOOTSTRAP_SERVER_KEY))
