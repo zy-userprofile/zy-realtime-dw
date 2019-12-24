@@ -2,10 +2,9 @@ package cn.zy.userprofile.realtime.dw.model.test
 
 import java.util.Properties
 
-import cn.zy.userprofile.realtime.dw.common.constants.KafkaConstant
 import cn.zy.userprofile.realtime.dw.common.utils.ConfigUtils
+import cn.zy.userprofile.realtime.dw.spark.common.constant.KafkaConstant
 import org.apache.flink.api.common.serialization.SimpleStringSchema
-import org.apache.flink.api.common.typeinfo.{TypeHint, TypeInformation}
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
