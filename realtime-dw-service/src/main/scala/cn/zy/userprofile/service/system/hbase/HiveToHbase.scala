@@ -4,6 +4,7 @@ import java.net.URI
 
 import org.apache.spark.sql.SparkSession
 import cn.zy.userprofile.realtime.dw.common.utils.fuctions._
+import cn.zy.userprofile.realtime.dw.spark.common.conf.HbaseConf
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.hadoop.hbase.client.ConnectionFactory
@@ -17,14 +18,21 @@ import org.apache.hadoop.mapreduce.Job
  * Author: hufenggang
  * Email: hufenggang2019@gmail.com
  * Date: 2019/12/23
+ * Hive数据导出到Hbase
  */
 object HiveToHbase {
 
     def main(args: Array[String]): Unit = {
 
         if (args.length < 1) {
-
+            println(
+                """
+                  |Error: Input parameter is less than 1
+                  |Must input one parameter.
+                  |""".stripMargin)
+            sys.exit(1)
         }
+        val dataDate = args(1)
         val hiveTable = ""
 
         val sparkSession = SparkSession.builder().appName("hiveToHbase")
@@ -71,8 +79,8 @@ object HiveToHbase {
 
         // 创建HBase的配置
         val conf = HBaseConfiguration.create()
-        conf.set("hbase.zookeeper.quorum", "192.168.1.107,192.168.1.108,192.168.1.109")
-        conf.set("hbase.zookeeper.property.clientPort", "2181")
+        conf.set("hbase.zookeeper.quorum", HbaseConf.HBASE_ZOOKEEPER_QUORUM)
+        conf.set("hbase.zookeeper.property.clientPort", HbaseConf.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT)
         conf.setInt("hbase.mapreduce.bulkload.max.hfiles.perRegion.perFamily", 5000)
 
         rdds.saveAsNewAPIHadoopFile(tmpDir,
