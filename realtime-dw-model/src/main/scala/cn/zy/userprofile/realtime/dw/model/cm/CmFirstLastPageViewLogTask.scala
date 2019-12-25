@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory
  * author: hufenggang
  * email: hufenggang2019@gmail.com
  * date: 2019/12/24 15:01
+ *
  * 用户访问PV
  */
 object CmFirstLastPageViewLogTask {

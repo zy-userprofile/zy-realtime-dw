@@ -30,7 +30,7 @@
 
         <dependency>
             <groupId>cn.zy.userprofile</groupId>
-            <artifactId>realtime-dw-spark-common</artifactId>
+            <artifactId>realtime-dw-spark</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
